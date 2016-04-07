@@ -38,8 +38,8 @@ module.exports = function(options) {
         args = [];
       }
       names = Array.isArray(names) ? names : [names];
-      var args = ['install', ...names].concat(args || []);
-      commands({cmd: 'npm', args: args}, cb);
+      var res = ['install', ...names].concat(args || []);
+      commands({cmd: 'npm', args: res}, cb);
     }
 
     /**
