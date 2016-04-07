@@ -24,6 +24,93 @@ app.npm.saveDev(['micromatch', 'is-absolute'], function(err) {
 });
 ```
 
+## API
+
+### [.npm](index.js#L33)
+
+Execute `npm install` with the given `args`, package `names` and callback.
+
+**Params**
+
+* `args` **{String|Array}**
+* `names` **{String|Array}**
+* `cb` **{Function}**: Callback
+
+**Example**
+
+```js
+app.npm('--save', ['isobject'], function(err) {
+  if (err) throw err;
+});
+```
+
+### [.npm.install](index.js#L60)
+
+Execute `npm install` with one or more package `names`. Does not save anything to package.json.
+
+**Params**
+
+* `names` **{String|Array}**
+* `cb` **{Function}**: Callback
+
+**Example**
+
+```js
+app.npm.install('isobject', function(err) {
+  if (err) throw err;
+});
+```
+
+### [.npm.latest](index.js#L78)
+
+(Re-)install and save the latest version of all `dependencies` and `devDependencies` listed in package.json.
+
+**Params**
+
+* `cb` **{Function}**: Callback
+
+**Example**
+
+```js
+app.npm.latest(function(err) {
+  if (err) throw err;
+});
+```
+
+### [.npm.save](index.js#L102)
+
+Execute `npm install --save` with one or more package `names`. Updates `dependencies` in package.json.
+
+**Params**
+
+* `names` **{String|Array}**
+* `cb` **{Function}**: Callback
+
+**Example**
+
+```js
+app.npm.save('micromatch', function(err) {
+  if (err) throw err;
+});
+```
+
+### [.npm.saveDev](index.js#L125)
+
+Execute `npm install --save-dev` with one or more package `names`. Updates `devDependencies` in package.json.
+
+**Params**
+
+* `names` **{String|Array}**
+* `cb` **{Function}**: Callback
+
+**Example**
+
+```js
+app.npm.saveDev('isobject', function(err) {
+  if (err) throw err;
+});
+```
+
 ## Related projects
 
 You might also be interested in these projects:
