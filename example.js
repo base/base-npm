@@ -5,6 +5,10 @@ var Base = require('base');
 var app = new Base();
 app.use(npm());
 
-app.npm.saveDev(['isobject', 'requires-regex'], function(err) {
+// app.npm.save(function(err) {
+//   if (err) throw err;
+// });
+
+app.npm.latest(function(err) {
   if (err) throw err;
 });

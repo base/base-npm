@@ -7,6 +7,7 @@
 
 'use strict';
 
+var path = require('path');
 var commands = require('spawn-commands');
 
 module.exports = function(options) {
@@ -18,7 +19,6 @@ module.exports = function(options) {
      * and callback.
      *
      * ```js
-     * // save `
      * app.npm('--save', ['isobject'], function(err) {
      *   if (err) throw err;
      * });
@@ -47,7 +47,6 @@ module.exports = function(options) {
      * save anything to package.json.
      *
      * ```js
-     * // save `
      * app.npm.install('isobject', function(err) {
      *   if (err) throw err;
      * });
@@ -60,6 +59,29 @@ module.exports = function(options) {
 
     npm.install = function install(names, cb) {
       npm(null, names, cb);
+    };
+
+    /**
+     * (Re-)install and save the latest version of all `dependencies`
+     * and `devDependencies` listed in package.json.
+     *
+     * ```js
+     * app.npm.latest(function(err) {
+     *   if (err) throw err;
+     * });
+     * ```
+     * @name .npm.latest
+     * @param {Function} `cb` Callback
+     * @api public
+     */
+
+    npm.latest = function(cb) {
+      var deps = latest(Object.keys(pkg(this).dependencies));
+      var devDeps = latest(Object.keys(pkg(this).devDependencies));
+      npm.save(deps, function(err) {
+        if (err) return cb(err);
+        npm.saveDev(devDeps, cb);
+      });
     };
 
     /**
@@ -78,6 +100,10 @@ module.exports = function(options) {
      */
 
     npm.save = function save(names, cb) {
+      if (typeof names === 'function') {
+        cb = names;
+        names = Object.keys(pkg(this).dependencies);
+      }
       npm('--save', names, cb);
     };
 
@@ -86,7 +112,6 @@ module.exports = function(options) {
      * Updates `devDependencies` in package.json.
      *
      * ```js
-     * // save `
      * app.npm.saveDev('isobject', function(err) {
      *   if (err) throw err;
      * });
@@ -98,7 +123,22 @@ module.exports = function(options) {
      */
 
     npm.saveDev = function saveDev(names, cb) {
+      if (typeof names === 'function') {
+        cb = names;
+        names = Object.keys(pkg(this).devDependencies);
+      }
       npm('--save-dev', names, cb);
     };
   };
 };
+
+function pkg(app) {
+  var pkgPath = path.resolve(app.cwd || process.cwd(), 'package.json');
+  return app.pkg ? app.pkg.data : require(pkgPath);
+}
+
+function latest(keys) {
+  return keys.map(function(key) {
+    return key + '@latest';
+  });
+}
