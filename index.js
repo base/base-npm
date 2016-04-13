@@ -80,6 +80,10 @@ module.exports = function(options) {
         return;
       }
 
+      if (typeof names === 'function') {
+        cb = names;
+      }
+
       var devDeps = latest(pkg(app, 'devDependencies'));
       var deps = latest(pkg(app, 'dependencies'));
 
