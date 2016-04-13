@@ -9,6 +9,14 @@ app.use(npm());
 //   if (err) throw err;
 // });
 
-app.npm.latest(function(err) {
-  if (err) throw err;
-});
+// app.npm.latest(function(err) {
+//   if (err) throw err;
+// });
+
+// app.npm.silent('isobject', function(err) {
+//   if (err) throw err;
+// });
+
+// app.npm.saveDev('isobject', function(err) {
+//   if (err) throw err;
+// });
