@@ -20,10 +20,13 @@
     "test": "mocha"
   },
   "dependencies": {
-    "spawn-commands": "^0.3.1"
+    "cross-spawn-async": "^2.2.1",
+    "extend-shallow": "^2.0.1"
   },
   "devDependencies": {
     "base": "^0.8.1",
+    "base-questions": "^0.5.6",
+    "delete": "^0.3.0",
     "gulp-format-md": "^0.1.7",
     "mocha": "^2.4.5",
     "pkg-store": "^0.2.1"
@@ -51,13 +54,15 @@
       "gulp-format-md"
     ],
     "related": {
+      "highlight": "base-bower",
       "list": [
-        "spawn-commands",
         "base",
+        "base-questions",
         "base-task"
       ]
     },
     "reflinks": [
+      "base-questions",
       "verb"
     ],
     "lint": {
