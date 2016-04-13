@@ -217,15 +217,15 @@ module.exports = function(options) {
  */
 
 function pkg(app, prop) {
-  var obj = {};
-  if (app.pkg && app.pkg.data) {
-    obj = app.pkg.data;
-  } else {
-    var cwd = app.cwd || process.cwd();
-    var pkgPath = path.resolve(cwd, 'package.json');
-    obj = require(pkgPath);
-  }
-  return Object.keys(obj[prop] || {});
+  return Object.keys(pkgData(app)[prop] || {});
+}
+
+function pkgPath(app) {
+  return path.resolve(app.cwd || process.cwd(), 'package.json');
+}
+
+function pkgData(app) {
+  return app.pkg ? app.pkg.data : require(pkgPath(app));
 }
 
 /**
