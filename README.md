@@ -79,7 +79,7 @@ app.npm.latest(function(err) {
 });
 ```
 
-### [.npm.save](index.js#L107)
+### [.npm.save](index.js#L111)
 
 Execute `npm install --save` with one or more package `names`. Updates `dependencies` in package.json.
 
@@ -96,7 +96,7 @@ app.npm.save('micromatch', function(err) {
 });
 ```
 
-### [.npm.saveDev](index.js#L137)
+### [.npm.saveDev](index.js#L141)
 
 Execute `npm install --save-dev` with one or more package `names`. Updates `devDependencies` in package.json.
 
@@ -113,7 +113,7 @@ app.npm.saveDev('isobject', function(err) {
 });
 ```
 
-### [.npm.askInstall](index.js#L168)
+### [.npm.askInstall](index.js#L172)
 
 Prompts the user to ask if they want to install the given package(s). Requires the [base-questions](https://github.com/node-base/base-questions) plugin to be registered first.
 
