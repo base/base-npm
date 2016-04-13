@@ -1,0 +1,8 @@
+{
+  "name": "fixtures",
+  "private": true,
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "license": "MIT"
+}
