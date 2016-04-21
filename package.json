@@ -1,7 +1,7 @@
 {
   "name": "base-npm",
   "description": "Base plugin that adds methods for programmatically running npm commands.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "homepage": "https://github.com/jonschlinkert/base-npm",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "jonschlinkert/base-npm",
@@ -25,11 +25,11 @@
   },
   "devDependencies": {
     "base": "^0.8.1",
-    "base-questions": "^0.5.6",
+    "base-questions": "^0.6.0",
     "delete": "^0.3.0",
-    "gulp-format-md": "^0.1.7",
+    "gulp-format-md": "^0.1.8",
     "mocha": "^2.4.5",
-    "pkg-store": "^0.2.1"
+    "pkg-store": "^0.2.2"
   },
   "keywords": [
     "api",
