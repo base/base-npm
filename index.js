@@ -187,7 +187,7 @@ module.exports = function(options) {
       var method = options.method || 'saveDev';
       var msg = options.message;
 
-      app.on('ask', function(question, answer, answers) {
+      app.on('ask', function(answer, key, question, answers) {
         if (typeof answer !== 'undefined' && question.name === key) {
           question.options.skip = true;
           answers[key] = answer;
