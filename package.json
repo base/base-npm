@@ -20,7 +20,7 @@
     "test": "mocha"
   },
   "dependencies": {
-    "cross-spawn-async": "^2.2.1",
+    "cross-spawn": "^3.0.1",
     "extend-shallow": "^2.0.1"
   },
   "devDependencies": {

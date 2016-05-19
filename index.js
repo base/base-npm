@@ -9,7 +9,7 @@
 
 var path = require('path');
 var extend = require('extend-shallow');
-var spawn = require('cross-spawn-async');
+var spawn = require('cross-spawn');
 
 module.exports = function(options) {
   return function(app) {
@@ -237,6 +237,12 @@ function pkgData(app) {
  */
 
 function latest(keys) {
+  if (typeof keys === 'string') {
+    keys = [keys];
+  }
+  if (!Array.isArray(keys)) {
+    return [];
+  }
   return keys.map(function(key) {
     return key.charAt(0) !== '-' ? (key + '@latest') : key;
   });
