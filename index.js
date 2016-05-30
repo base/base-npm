@@ -188,9 +188,10 @@ module.exports = function(options) {
       // extend `data` onto options, which is used
       // by question-store to pre-populate answers
       options = extend({}, options, options.data);
-      var type = (options.type || arrayify(names).join(', '));
-      var key = 'install-' + type;
-      var method = options.method || 'devDependencies';
+      names = arrayify(names);
+
+      var type = options.type || 'devDependencies';
+      var key = 'base-npm-install-' + type; // namespace to valid conflicts
       var msg = options.message;
 
       app.on('ask', function(answer, key, question, answers) {
@@ -206,14 +207,26 @@ module.exports = function(options) {
       }
 
       if (typeof msg === 'undefined') {
-        msg = 'Would you like to install ' + type + '?';
+        var target = names.length > 1 ? type : `"${names[0]}" to "${type}"`;
+        msg = `Would you like to install ${target}?`;
       }
 
-      app.question(key, {message: msg, type: 'confirm', save: false});
+      if (names.length === 1) {
+        app.confirm(key, {message: msg, save: false});
+      } else {
+        app.choices(key, {message: msg, save: false}, names);
+      }
+
       app.ask(key, options, function(err, answers) {
         if (err) return cb(err);
-        if (answers[key] === true) {
-          npm[method](names, cb);
+        var answer = answers[key];
+        if (answer === true) {
+          answer = names;
+        }
+
+        answer = arrayify(answer);
+        if (answer.length) {
+          npm[type](answer, cb);
         } else {
           cb();
         }
