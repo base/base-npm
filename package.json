@@ -20,15 +20,17 @@
     "test": "mocha"
   },
   "dependencies": {
-    "cross-spawn": "^3.0.1",
-    "extend-shallow": "^2.0.1"
+    "base-questions": "^0.6.6",
+    "cross-spawn": "^4.0.0",
+    "extend-shallow": "^2.0.1",
+    "is-registered": "^0.1.4",
+    "is-valid-instance": "^0.1.0"
   },
   "devDependencies": {
     "base": "^0.8.1",
-    "base-questions": "^0.6.0",
-    "delete": "^0.3.0",
-    "gulp-format-md": "^0.1.8",
-    "mocha": "^2.4.5",
+    "delete": "^0.3.2",
+    "gulp-format-md": "^0.1.9",
+    "mocha": "^2.5.3",
     "pkg-store": "^0.2.2"
   },
   "keywords": [

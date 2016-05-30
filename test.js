@@ -18,6 +18,7 @@ describe('base-npm', function() {
     process.chdir(fixtures());
     pkg = new Pkg(process.cwd());
     app = new Base();
+    app.isApp = true;
     app.use(npm());
   });
 
@@ -81,8 +82,6 @@ describe('base-npm', function() {
 
   it('should ask to install the given package', function(cb) {
     this.timeout(20000);
-    app.use(questions());
-
     app.npm.askInstall(['helper-example'], {noprompt: true}, function(err) {
       if (err) return cb(err);
       assert(pkg.has('devDependencies.helper-example'));

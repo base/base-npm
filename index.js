@@ -8,12 +8,18 @@
 'use strict';
 
 var path = require('path');
+var isValid = require('is-valid-instance');
+var isRegistered = require('is-registered');
+var questions = require('base-questions');
 var extend = require('extend-shallow');
 var spawn = require('cross-spawn');
 
 module.exports = function(options) {
   return function(app) {
-    if (this.isRegistered('base-npm')) return;
+    if (!isValidInstance(app)) return;
+
+    // register the base questions plugin
+    this.use(questions());
 
     /**
      * Execute `npm install` with the given `args`, package `names`
@@ -87,9 +93,9 @@ module.exports = function(options) {
       var devDeps = latest(pkg(app, 'devDependencies'));
       var deps = latest(pkg(app, 'dependencies'));
 
-      npm.save(deps, function(err) {
+      npm.dependencies(deps, function(err) {
         if (err) return cb(err);
-        npm.saveDev(devDeps, cb);
+        npm.devDependencies(devDeps, cb);
       });
     };
 
@@ -98,17 +104,17 @@ module.exports = function(options) {
      * Updates `dependencies` in package.json.
      *
      * ```js
-     * app.npm.save('micromatch', function(err) {
+     * app.npm.dependencies('micromatch', function(err) {
      *   if (err) throw err;
      * });
      * ```
-     * @name .npm.save
+     * @name .npm.dependencies
      * @param {String|Array} `names`
      * @param {Function} `cb` Callback
      * @api public
      */
 
-    npm.save = function(names, cb) {
+    npm.dependencies = function(names, cb) {
       var args = [].concat.apply([], [].slice.call(arguments));
       cb = args.pop();
 
@@ -128,17 +134,17 @@ module.exports = function(options) {
      * Updates `devDependencies` in package.json.
      *
      * ```js
-     * app.npm.saveDev('isobject', function(err) {
+     * app.npm.devDependencies('isobject', function(err) {
      *   if (err) throw err;
      * });
      * ```
-     * @name .npm.saveDev
+     * @name .npm.devDependencies
      * @param {String|Array} `names`
      * @param {Function} `cb` Callback
      * @api public
      */
 
-    npm.saveDev = function(names, cb) {
+    npm.devDependencies = function(names, cb) {
       var args = [].concat.apply([], [].slice.call(arguments));
       cb = args.pop();
 
@@ -184,7 +190,7 @@ module.exports = function(options) {
       options = extend({}, options, options.data);
       var type = (options.type || arrayify(names).join(', '));
       var key = 'install-' + type;
-      var method = options.method || 'saveDev';
+      var method = options.method || 'devDependencies';
       var msg = options.message;
 
       app.on('ask', function(answer, key, question, answers) {
@@ -213,8 +219,23 @@ module.exports = function(options) {
         }
       });
     };
+
+    /**
+     * Aliases
+     */
+
+    npm.saveDev = npm.devDependencies;
+    npm.save = npm.dependencies;
   };
 };
+
+/**
+ * Return true if app is a valid instance
+ */
+
+function isValidInstance(app) {
+  return !(!isValid(app) || isRegistered(app, 'base-npm'));
+}
 
 /**
  * Get the package.json for the current project
