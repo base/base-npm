@@ -13,6 +13,6 @@ app.use(npm());
 //   if (err) throw err;
 // });
 
-// app.npm.latest(function(err) {
-//   if (err) throw err;
-// });
+app.npm.latest(function(err) {
+  if (err) throw err;
+});
