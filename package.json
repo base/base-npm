@@ -2,11 +2,11 @@
   "name": "base-npm",
   "description": "Base plugin that adds methods for programmatically running npm commands.",
   "version": "0.3.2",
-  "homepage": "https://github.com/jonschlinkert/base-npm",
+  "homepage": "https://github.com/node-base/base-npm",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
-  "repository": "jonschlinkert/base-npm",
+  "repository": "node-base/base-npm",
   "bugs": {
-    "url": "https://github.com/jonschlinkert/base-npm/issues"
+    "url": "https://github.com/node-base/base-npm/issues"
   },
   "license": "MIT",
   "files": [
@@ -23,8 +23,7 @@
     "base-questions": "^0.6.6",
     "cross-spawn": "^4.0.0",
     "extend-shallow": "^2.0.1",
-    "is-registered": "^0.1.4",
-    "is-valid-instance": "^0.1.0"
+    "is-valid-app": "^0.1.1"
   },
   "devDependencies": {
     "base": "^0.8.1",
@@ -35,12 +34,15 @@
   },
   "keywords": [
     "api",
+    "base",
+    "baseplugin",
     "cli",
     "commands",
     "dev",
     "flags",
     "install",
     "npm",
+    "plugin",
     "save",
     "savedev",
     "spawn"
