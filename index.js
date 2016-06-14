@@ -8,18 +8,13 @@
 'use strict';
 
 var path = require('path');
-var isValid = require('is-valid-instance');
-var isRegistered = require('is-registered');
-var questions = require('base-questions');
+var isValid = require('is-valid-app');
 var extend = require('extend-shallow');
 var spawn = require('cross-spawn');
 
 module.exports = function(options) {
   return function(app) {
-    if (!isValidInstance(app)) return;
-
-    // register the base questions plugin
-    this.use(questions());
+    if (!isValid(app, 'base-npm')) return;
 
     /**
      * Execute `npm install` with the given `args`, package `names`
@@ -176,8 +171,9 @@ module.exports = function(options) {
      */
 
     npm.askInstall = function(names, options, cb) {
+      // register the base questions plugin
       if (typeof app.ask !== 'function') {
-        throw new Error('expected the base-questions to be registered');
+        app.use(require('base-questions')());
       }
 
       if (typeof options === 'function') {
@@ -241,14 +237,6 @@ module.exports = function(options) {
     npm.save = npm.dependencies;
   };
 };
-
-/**
- * Return true if app is a valid instance
- */
-
-function isValidInstance(app) {
-  return !(!isValid(app) || isRegistered(app, 'base-npm'));
-}
 
 /**
  * Get the package.json for the current project
