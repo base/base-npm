@@ -11,6 +11,8 @@ var path = require('path');
 var isValid = require('is-valid-app');
 var extend = require('extend-shallow');
 var spawn = require('cross-spawn');
+var request = require('min-request');
+var reduce = require('async-array-reduce');
 
 module.exports = function(options) {
   return function(app) {
@@ -155,6 +157,36 @@ module.exports = function(options) {
     };
 
     /**
+     * Check if one or more names exist on npm.
+     *
+     * ```js
+     * app.npm.exists('isobject', function(err, results) {
+     *   if (err) throw err;
+     *   console.log(results.isobject);
+     * });
+     * //=> true
+     * ```
+     * @name .npm.exists
+     * @param {String|Array} `names`
+     * @param {Function} `cb` Callback
+     * @returns {Object} Object of results where the `key` is the name and the value is `true` or `false`.
+     * @api public
+     */
+
+    npm.exists = function(names, cb) {
+      var names = [].concat.apply([], [].slice.call(arguments));
+      cb = names.pop();
+
+      reduce(names, {}, function(acc, name, next) {
+        checkName(name, function(err, exists) {
+          if (err) return next(err);
+          acc[name] = exists;
+          next(null, acc);
+        });
+      }, cb);
+    };
+
+    /**
      * Prompts the user to ask if they want to install the given package(s).
      * Requires the [base-questions][] plugin to be registered first.
      *
@@ -276,4 +308,35 @@ function latest(keys) {
 
 function arrayify(val) {
   return val ? (Array.isArray(val) ? val : [val]) : [];
+}
+
+/**
+ * Check if a name exists on npm.
+ *
+ * ```js
+ * checkName('foo', function(err, exists) {
+ *   if (err) throw err;
+ *   console.log(exists);
+ * });
+ * //=> true
+ * ```
+ * @param  {String} `name` Name of module to check.
+ * @param  {Function} `cb` Callback function
+ */
+
+function checkName(name, cb) {
+  request(`https://registry.npmjs.org/${name}/latest`, {}, function(err, res, msg) {
+    if (err) return cb(err);
+
+    if (typeof msg === 'string' && msg === 'Package not found') {
+      cb(null, false);
+      return;
+    }
+
+    if (res && res.statusCode === 404) {
+      return cb(null, false);
+    }
+
+    cb(null, true);
+  });
 }
