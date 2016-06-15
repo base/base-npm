@@ -157,6 +157,30 @@ module.exports = function(options) {
     };
 
     /**
+     * Execute `npm install --global` with one or more package `names`.
+     *
+     * ```js
+     * app.npm.global('mocha', function(err) {
+     *   if (err) throw err;
+     * });
+     * ```
+     * @name .npm.global
+     * @param  {String|Array} `names`
+     * @param  {Function} `cb` Callback
+     * @api public
+     */
+    npm.global = function(names, cb) {
+      var args = [].concat.apply([], [].slice.call(arguments));
+      cb = args.pop();
+
+      if (!args.length) {
+        cb();
+        return;
+      }
+      npm.install(['--global'].concat(args), cb);
+    };
+
+    /**
      * Check if one or more names exist on npm.
      *
      * ```js

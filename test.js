@@ -39,6 +39,15 @@ describe('base-npm', function() {
     assert.equal(typeof npm, 'function');
   });
 
+  it('should install globally and not save to package.json', function(cb) {
+    app.npm.global('node-foo', function(err) {
+      if (err) return cb(err);
+      assert(!pkg.has('dependencies.node-foo'));
+      assert(!pkg.has('devDependencies.node-foo'));
+      cb();
+    });
+  });
+
   it('should install and not save to package.json', function(cb) {
     app.npm.install('isobject', function(err) {
       if (err) return cb(err);
