@@ -20,10 +20,12 @@
     "test": "mocha"
   },
   "dependencies": {
+    "async-array-reduce": "^0.1.0",
     "base-questions": "^0.6.6",
     "cross-spawn": "^4.0.0",
     "extend-shallow": "^2.0.1",
-    "is-valid-app": "^0.1.1"
+    "is-valid-app": "^0.1.1",
+    "min-request": "^1.4.1"
   },
   "devDependencies": {
     "base": "^0.8.1",
