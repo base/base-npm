@@ -119,13 +119,4 @@ describe('base-npm', function() {
       cb();
     });
   });
-
-  it('should ask to install the given package', function(cb) {
-    this.timeout(20000);
-    app.npm.askInstall(['helper-example'], {noprompt: true}, function(err) {
-      if (err) return cb(err);
-      assert(pkg.has('devDependencies.helper-example'));
-      cb();
-    });
-  });
 });
