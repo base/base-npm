@@ -80,6 +80,37 @@ describe('base-npm', function() {
     });
   });
 
+  it('should return `true` when module exists on npm', function(cb) {
+    var name = 'base-npm';
+    app.npm.exists(name, function(err, exists) {
+      if (err) return cb(err);
+      assert.equal(typeof exists, 'object');
+      assert.equal(exists[name], true);
+      cb();
+    });
+  });
+
+  it('should return `false` when module does not exist on npm', function(cb) {
+    var name = 'ljalskdjflkadsflkjalksdjlkasdflkjsdfljlklk';
+    app.npm.exists(name, function(err, exists) {
+      if (err) return cb(err);
+      assert.equal(typeof exists, 'object');
+      assert.equal(exists[name], false);
+      cb();
+    });
+  });
+
+  it('should return mixed results when some modules exist and some do not', function(cb) {
+    var names = ['base-npm', 'ljalskdjflkadsflkjalksdjlkasdflkjsdfljlklk'];
+    app.npm.exists(names, function(err, exists) {
+      if (err) return cb(err);
+      assert.equal(typeof exists, 'object');
+      assert.equal(exists[names[0]], true);
+      assert.equal(exists[names[1]], false);
+      cb();
+    });
+  });
+
   it('should ask to install the given package', function(cb) {
     this.timeout(20000);
     app.npm.askInstall(['helper-example'], {noprompt: true}, function(err) {
