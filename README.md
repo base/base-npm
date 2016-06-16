@@ -152,6 +152,13 @@ app.npm.exists('isobject', function(err, results) {
 
 ## History
 
+**v0.4.0**
+
+* adds `global` method for installing with the `--global` flag
+* adds `exists` method for checking if a package exists on `npm`
+* removes [base-questions](https://github.com/node-base/base-questions)
+* removes `askInstall` method (moved to [base-npm-prompt](https://github.com/node-base/base-npm-prompt))
+
 **v0.3.0**
 
 * improved instance checks
