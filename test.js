@@ -4,7 +4,6 @@ require('mocha');
 var assert = require('assert');
 var path = require('path');
 var Base = require('base');
-var questions = require('base-questions');
 var Pkg = require('pkg-store');
 var del = require('delete');
 var npm = require('./');
@@ -14,6 +13,8 @@ var fixtures = path.resolve.bind(path, __dirname, 'fixtures');
 var cwd = process.cwd();
 
 describe('base-npm', function() {
+  this.timeout(20000);
+
   beforeEach(function() {
     process.chdir(fixtures());
     pkg = new Pkg(process.cwd());
@@ -25,7 +26,7 @@ describe('base-npm', function() {
   afterEach(function(cb) {
     del(fixtures('package.json'), function(err) {
       if (err) return cb(err);
-      pkg.set(require(fixtures('tmpl.json')));
+      pkg.data = require(fixtures('tmpl.json'));
       pkg.save();
       cb();
     });
