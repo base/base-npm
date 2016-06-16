@@ -14,10 +14,12 @@ $ npm install base-npm --save
 
 ## Usage
 
+Note that if you use [base](https://github.com/node-base/base) directly you will also need to let the plugin know that it is being registered on a Base "application" (since `Base` can be used to create anything, like `views`, `collections` etc.).
+
 ```js
 var npm = require('base-npm');
 var Base = require('base');
-var app = new Base();
+var app = new Base({isApp: true}); // <=
 app.use(npm());
 
 // install npm packages `micromatch` and `is-absolute` to devDependencies
