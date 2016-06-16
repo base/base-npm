@@ -67,9 +67,10 @@
       ]
     },
     "reflinks": [
+      "base-npm-prompt",
       "base-questions",
       "verb",
-      "base-npm-prompt"
+      "base"
     ],
     "lint": {
       "reflinks": true
