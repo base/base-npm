@@ -36,8 +36,9 @@ module.exports = function(options) {
 
     this.define('npm', npm);
     function npm(cmds, args, cb) {
+      var cwd = app.cwd || process.cwd();
       args = arrayify(cmds).concat(arrayify(args));
-      spawn('npm', args, {stdio: 'inherit'})
+      spawn('npm', args, {cwd: cwd, stdio: 'inherit'})
         .on('error', cb)
         .on('close', function(code, err) {
           cb(err, code);
