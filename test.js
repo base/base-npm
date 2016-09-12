@@ -120,4 +120,27 @@ describe('base-npm', function() {
       cb();
     });
   });
+
+  describe('cwd', function() {
+    var nestedPkg;
+    beforeEach(function() {
+      nestedPkg = new Pkg(fixtures('nested'));
+      nestedPkg.data = require(fixtures('tmpl.json'));
+      nestedPkg.save();
+    });
+
+    afterEach(function(cb) {
+      del(fixtures('nested'), cb);
+    });
+
+    it('should install to the specified cwd', function(cb) {
+      app.cwd = fixtures('nested');
+      app.npm.saveDev('isobject', function(err) {
+        if (err) return cb(err);
+        nestedPkg = new Pkg(fixtures('nested'));
+        assert(nestedPkg.has('devDependencies.isobject'));
+        cb();
+      });
+    });
+  });
 });
