@@ -1,7 +1,7 @@
 {
   "name": "base-npm",
   "description": "Base plugin that adds methods for programmatically running npm commands.",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "homepage": "https://github.com/node-base/base-npm",
   "author": "Jon Schlinkert (https://github.com/jonschlinkert)",
   "repository": "node-base/base-npm",
